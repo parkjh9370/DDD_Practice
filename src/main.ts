@@ -12,9 +12,9 @@ async function bootstrap() {
 
   // Swagger
   const swaggerOptions = new DocumentBuilder()
-    .setTitle('Classum PreTest') //
+    .setTitle('DDD Practice')
     .setVersion('0.1')
-    .setDescription('Classum Back-end Engineer PreTest API Specification')
+    .setDescription('DDD Practice API Specification')
     .addBearerAuth()
     .build();
   const customOptions: SwaggerCustomOptions = {
@@ -33,7 +33,7 @@ async function bootstrap() {
 
   const startLog =
     config.NODE_ENV === 'development' || config.NODE_ENV === 'local_production'
-      ? `✅ Server on http://localhost:${config.PORT}` //
+      ? `✅ Server on http://localhost:${config.PORT}`
       : `✅ Server on port ${config.PORT}`;
 
   console.info(startLog);
