@@ -28,4 +28,10 @@ export const config = {
     PASSWORD: required('MYSQL_PASSWORD'),
   },
   ADMIN_ACCESS_KEY: required('ADMIN_ACCESS_KEY'),
+  JWT: {
+    ACCESS_KEY: required('JWT_ACCESS_KEY'),
+    ACCESS_KEY_EXPIRED_IN: required('JWT_ACCESS_KEY_EXPIRED_IN'),
+    REFRESH_KEY: required('JWT_REFRESH_KEY'),
+    REFRESH_KEY_EXPIRED_IN: required('JWT_REFRESH_KEY_EXPIRED_IN'),
+  },
 };
