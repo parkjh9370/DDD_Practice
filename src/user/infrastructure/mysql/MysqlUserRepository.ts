@@ -46,7 +46,7 @@ export class MysqlUserRepository implements UserRepository {
     }
 
     const entity = await this.userRepository
-      .createQueryBuilder(`user`) //
+      .createQueryBuilder(`user`)
       .leftJoinAndSelect(`user.spaceUser`, `spaceUser`)
       .where(whereClause)
       .getOne();
@@ -69,7 +69,7 @@ export class MysqlUserRepository implements UserRepository {
   }
 
   private updateRefreshToken(user: User, token: string): void {
-    this.userRepository //
+    this.userRepository
       .createQueryBuilder()
       .update<UserEntity>(UserEntity, {
         refreshToken: token,
@@ -80,7 +80,7 @@ export class MysqlUserRepository implements UserRepository {
   }
 
   private updateProfile(user: User, lastName: string, firstName: string, profileImageUrl: string) {
-    this.userRepository //
+    this.userRepository
       .createQueryBuilder()
       .update<UserEntity>(UserEntity, {
         lastName: lastName,

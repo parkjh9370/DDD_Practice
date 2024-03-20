@@ -31,7 +31,7 @@ import { AuthController } from './presentation/AuthController';
       },
     }),
     TypeOrmModule.forFeature([
-      UserEntity, //
+      UserEntity,
     ]),
   ],
   exports: [],

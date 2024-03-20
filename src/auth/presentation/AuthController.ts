@@ -18,7 +18,7 @@ import { AuthControllerReIssuanceTokenResponse } from './dto/AuthControllerReIss
 @UseFilters(AllExceptionsFilter)
 export class AuthController {
   constructor(
-    private readonly signInUseCase: SignInUseCase, //
+    private readonly signInUseCase: SignInUseCase,
     private readonly issueTokenUseCase: IssueTokenUseCase,
   ) {}
 
@@ -68,7 +68,7 @@ export class AuthController {
   @ApiBadRequestResponse({ type: ControllerResponseOnError, description: '요청 오류' })
   @ApiInternalServerErrorResponse({ type: ControllerResponseOnError, description: '서버 오류' })
   async reIssuanceToken(
-    @CurrentUser() _userId: number, //
+    @CurrentUser() _userId: number,
     @Req() request: Request,
     @Res() response: Response,
   ) {
