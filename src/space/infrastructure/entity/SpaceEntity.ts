@@ -2,6 +2,7 @@ import { BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColu
 
 import { SpaceUserEntity } from './SpaceUserEntity';
 import { SpaceRoleEntity } from './SpaceRoleEntity';
+import { PostEntity } from '../../../post/infrastructure/entity/PostEntity';
 
 export enum SpaceEntityIsUse {
   YES = 'Y',
@@ -47,4 +48,8 @@ export class SpaceEntity extends BaseEntity {
   @OneToMany(() => SpaceUserEntity, (spaceUser) => spaceUser.space)
   @JoinColumn({ name: 'ps_index' })
   spaceUser: SpaceUserEntity[];
+
+  @OneToMany(() => PostEntity, (post) => post.space)
+  @JoinColumn({ name: 'ps_index' })
+  post: PostEntity[];
 }
