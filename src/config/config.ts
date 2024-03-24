@@ -34,4 +34,9 @@ export const config = {
     REFRESH_KEY: required('JWT_REFRESH_KEY'),
     REFRESH_KEY_EXPIRED_IN: required('JWT_REFRESH_KEY_EXPIRED_IN'),
   },
+  S3: {
+    ACCESS_KEY_ID: required('S3_ACCESS_KEY_ID'),
+    SECRET_ACCESS_KEY: required('S3_SECRET_ACCESS_KEY'),
+    REGION: required('S3_REGION'),
+  },
 };
