@@ -7,27 +7,27 @@ export enum PostUploadFileEntityIsUse {
   NO = 'N',
 }
 
-@Entity({ name: 'classum_post_upload_file' })
+@Entity({ name: 'p_post_upload_file' })
 export class PostUploadFileEntity extends BaseEntity {
-  @PrimaryGeneratedColumn({ name: 'cpuf_index' })
+  @PrimaryGeneratedColumn({ name: 'ppuf_index' })
   index: number;
 
-  @Column({ name: 'cpuf_cp_index' })
+  @Column({ name: 'ppuf_pp_index' })
   postIndex: number;
 
-  @Column({ name: 'cpuf_file_url' })
+  @Column({ name: 'ppuf_file_url' })
   fileUrl: string;
 
-  @Column({ name: 'cpuf_is_use' })
+  @Column({ name: 'ppuf_is_use' })
   isUse: PostUploadFileEntityIsUse;
 
-  @Column({ name: 'cpuf_register_date_time' })
+  @Column({ name: 'ppuf_register_date_time' })
   registerDateTime: string;
 
-  @Column({ name: 'cpuf_delete_date_time' })
+  @Column({ name: 'ppuf_delete_date_time' })
   deleteDateTime: string;
 
   @ManyToOne(() => PostEntity, (space) => space.postUploadFile)
-  @JoinColumn({ name: 'cpuf_cp_index' })
+  @JoinColumn({ name: 'ppuf_pp_index' })
   post: PostEntity;
 }

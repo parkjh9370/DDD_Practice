@@ -4,7 +4,7 @@ import { ControllerResponse } from 'src/shared/core/presentation/ControllerRespo
 
 class PostControllerCreateResponseBodyResult {
   @ApiProperty({
-    description: '생성된 classum_post 관리번호',
+    description: '생성된 p_post 관리번호',
     example: 1,
   })
   id: number;

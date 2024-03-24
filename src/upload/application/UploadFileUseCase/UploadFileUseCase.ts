@@ -18,7 +18,7 @@ export class UploadFileUseCase implements UseCase<UploadFileUseCaseRequest, Uplo
   async execute(request: UploadFileUseCaseRequest): Promise<UploadFileUseCaseResponse> {
     const { buffer, contentType } = request;
 
-    const bucket = config.NODE_ENV === 'development' ? 'classum-files-dev' : 'classum-files';
+    const bucket = config.NODE_ENV === 'development' ? 'practice-v1-files-dev' : 'practice-v1-files';
     const fileUniqueKey = v4() + '.' + contentType.split('/')[1];
 
     await this.s3BucketUploader.execute({

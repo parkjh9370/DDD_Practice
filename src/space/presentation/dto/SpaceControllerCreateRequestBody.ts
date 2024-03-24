@@ -29,7 +29,7 @@ export class SpaceControllerCreateRequestBody {
 
   @ApiProperty({
     name: 'logoImageUrl',
-    example: 'https://classum-files-dev.s3.ap-northeast-2.amazonaws.com/b138133b-9c55-47fc-a11c-0a04b949d4af.jpeg',
+    example: 'https://files-dev.s3.ap-northeast-2.amazonaws.com/b138133b-9c55-47fc-a11c-0a04b949d4af.jpeg',
     required: true,
     description: '로고 이미지 URL',
   })
