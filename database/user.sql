@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS p_users (
   p_register_date_time DATETIME DEFAULT NULL COMMENT "등록일시",
   p_update_date_time DATETIME DEFAULT NULL COMMENT "갱신일시",
   p_delete_date_time DATETIME DEFAULT NULL COMMENT "삭제일시",
-  PRIMARY KEY (cu_index)
+  PRIMARY KEY (p_index)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT 'p_user';

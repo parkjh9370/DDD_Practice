@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-// import { SpaceUserEntity } from 'src/space/infrastructure/entity/SpaceUserEntity';
+import { SpaceUserEntity } from 'src/space/infrastructure/entity/SpaceUserEntity';
 
 export enum UserEntityIsAdmin {
   YES = 'Y',
@@ -14,46 +14,46 @@ export enum UserEntityIsUse {
 
 @Entity({ name: 'p_user' })
 export class UserEntity extends BaseEntity {
-  @PrimaryGeneratedColumn({ name: 'p_index' })
+  @PrimaryGeneratedColumn({ name: 'pu_index' })
   index: number;
 
-  @Column({ name: 'p_email' })
+  @Column({ name: 'pu_email' })
   email: string;
 
-  @Column({ name: 'p_password' })
+  @Column({ name: 'pu_password' })
   password: string;
 
-  @Column({ name: 'p_last_name' })
+  @Column({ name: 'pu_last_name' })
   lastName: string;
 
-  @Column({ name: 'p_first_name' })
+  @Column({ name: 'pu_first_name' })
   firstName: string;
 
-  @Column({ name: 'p_profile_image_url' })
+  @Column({ name: 'pu_profile_image_url' })
   profileImageUrl: string;
 
-  @Column({ name: 'p_is_admin' })
+  @Column({ name: 'pu_is_admin' })
   isAdmin: UserEntityIsAdmin;
 
-  @Column({ name: 'p_is_use' })
+  @Column({ name: 'pu_is_use' })
   isUse: UserEntityIsUse;
 
-  @Column({ name: 'p_refresh_token' })
+  @Column({ name: 'pu_refresh_token' })
   refreshToken: string;
 
-  @Column({ name: 'p_refresh_token_expiration_date_time' })
+  @Column({ name: 'pu_refresh_token_expiration_date_time' })
   refreshTokenExpirationDateTime: string;
 
-  @Column({ name: 'p_register_date_time' })
+  @Column({ name: 'pu_register_date_time' })
   registerDateTime: string;
 
-  @Column({ name: 'p_update_date_time' })
+  @Column({ name: 'pu_update_date_time' })
   updateDateTime: string;
 
-  @Column({ name: 'p_delete_date_time' })
+  @Column({ name: 'pu_delete_date_time' })
   deleteDateTime: string;
 
-  // @OneToMany(() => SpaceUserEntity, (spaceUser) => spaceUser.user)
-  // @JoinColumn({ name: 'p_index' })
-  // spaceUser: SpaceUserEntity[];
+  @OneToMany(() => SpaceUserEntity, (spaceUser) => spaceUser.user)
+  @JoinColumn({ name: 'pu_index' })
+  spaceUser: SpaceUserEntity[];
 }
