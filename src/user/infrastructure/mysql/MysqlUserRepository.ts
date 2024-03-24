@@ -58,18 +58,18 @@ export class MysqlUserRepository implements UserRepository {
     const { refreshToken, lastName, firstName, profileImageUrl } = options;
 
     if (typeof refreshToken === 'string') {
-      this.updateRefreshToken(user, refreshToken);
+      await this.updateRefreshToken(user, refreshToken);
     }
 
     if (lastName && firstName && profileImageUrl) {
-      this.updateProfile(user, lastName, firstName, profileImageUrl);
+      await this.updateProfile(user, lastName, firstName, profileImageUrl);
     }
 
     return;
   }
 
-  private updateRefreshToken(user: User, token: string): void {
-    this.userRepository
+  private async updateRefreshToken(user: User, token: string): Promise<void> {
+    await this.userRepository
       .createQueryBuilder()
       .update<UserEntity>(UserEntity, {
         refreshToken: token,
@@ -79,8 +79,8 @@ export class MysqlUserRepository implements UserRepository {
       .execute();
   }
 
-  private updateProfile(user: User, lastName: string, firstName: string, profileImageUrl: string) {
-    this.userRepository
+  private async updateProfile(user: User, lastName: string, firstName: string, profileImageUrl: string): Promise<void> {
+    await this.userRepository
       .createQueryBuilder()
       .update<UserEntity>(UserEntity, {
         lastName: lastName,

@@ -10,6 +10,9 @@ import { CurrentUser } from 'src/shared/decorators/UserDecorator';
 import { CreateUserUseCase } from '../application/CreateUserUseCase/CreateUserUseCase';
 import { FindOneUserUseCase } from '../application/FindOneUserUseCase/FindOneUserUseCase';
 import { UpdateUserUseCase } from '../application/UpdateUserUseCase/UpdateUserUseCase';
+import { FindParticipatingSpaceListUseCase } from '../application/FindParticipatingSpaceListUseCase/FindParticipatingSpaceListUseCase';
+import { FindPostsByUserUseCase } from 'src/post/application/FindPostsByUserUseCase/FindPostsByUserUseCase';
+import { FindChatsByUserIdUseCase } from 'src/chat/application/FindChatsByUserIdUseCase/FindChatsByUserIdUseCase';
 import { UserControllerSignUpRequestBody } from './dto/UserControllerSignUpRequestBody';
 import { UserControllerSignUpResponse } from './dto/UserControllerSignUpResponse';
 import { UserControllerRequestParams } from './dto/UserControllerRequestParams';
@@ -25,9 +28,12 @@ import { UserControllerGetPostListResponse } from './dto/UserControllerGetPostLi
 @UseFilters(AllExceptionsFilter)
 export class UserController {
   constructor(
-    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly createUserUseCase: CreateUserUseCase, //
     private readonly findOneUserUseCase: FindOneUserUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
+    private readonly findParticipatingSpaceListUseCase: FindParticipatingSpaceListUseCase,
+    private readonly findPostsByUserUseCase: FindPostsByUserUseCase,
+    private readonly findChatsByUserIdUseCase: FindChatsByUserIdUseCase,
   ) {}
 
   @Post('admin/sign-up')
@@ -44,7 +50,7 @@ export class UserController {
   @ApiBadRequestResponse({ type: ControllerResponseOnError, description: '요청 오류' })
   @ApiInternalServerErrorResponse({ type: ControllerResponseOnError, description: '서버 오류' })
   async adminSignUp(
-    @Body() body: UserControllerSignUpRequestBody,
+    @Body() body: UserControllerSignUpRequestBody, //
     @Req() request: Request,
     @Res() response: Response,
   ) {
@@ -77,7 +83,7 @@ export class UserController {
   @ApiBadRequestResponse({ type: ControllerResponseOnError, description: '요청 오류' })
   @ApiInternalServerErrorResponse({ type: ControllerResponseOnError, description: '서버 오류' })
   async signUp(
-    @Body() body: UserControllerSignUpRequestBody,
+    @Body() body: UserControllerSignUpRequestBody, //
     @Req() request: Request,
     @Res() response: Response,
   ) {
@@ -121,7 +127,7 @@ export class UserController {
   @ApiBadRequestResponse({ type: ControllerResponseOnError, description: '요청 오류' })
   @ApiInternalServerErrorResponse({ type: ControllerResponseOnError, description: '서버 오류' })
   async findOne(
-    @Param() param: UserControllerRequestParams,
+    @Param() param: UserControllerRequestParams, //
     @Req() request: Request,
     @Res() response: Response,
   ) {
@@ -158,7 +164,7 @@ export class UserController {
   @ApiBadRequestResponse({ type: ControllerResponseOnError, description: '요청 오류' })
   @ApiInternalServerErrorResponse({ type: ControllerResponseOnError, description: '서버 오류' })
   async findMe(
-    @CurrentUser() userId: number,
+    @CurrentUser() userId: number, //
     @Req() request: Request,
     @Res() response: Response,
   ) {
@@ -190,9 +196,9 @@ export class UserController {
   @ApiBadRequestResponse({ type: ControllerResponseOnError, description: '요청 오류' })
   @ApiInternalServerErrorResponse({ type: ControllerResponseOnError, description: '서버 오류' })
   async update(
-    @CurrentUser() _userId: number,
+    @CurrentUser() _userId: number, //
     @Body() body: UserControllerUpdateRequestBody,
-    @Param() param: UserControllerRequestParams,
+    @Param() param: UserControllerRequestParams, //
     @Req() request: Request,
     @Res() response: Response,
   ) {
@@ -218,6 +224,101 @@ export class UserController {
         statusCode: HttpStatus.NO_CONTENT,
         timestamp: new Date().toISOString(),
         path: request.url,
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Get('post-list')
+  @UseGuards(JwtAuthGuard('access'))
+  @UseFilters(AllExceptionsFilter)
+  @ApiOperation({ summary: '작성한 Post 목록 조회' })
+  @ApiOkResponse({ type: UserControllerGetPostListResponse, description: '성공' })
+  @ApiBadRequestResponse({ type: ControllerResponseOnError, description: '요청 오류' })
+  @ApiInternalServerErrorResponse({ type: ControllerResponseOnError, description: '서버 오류' })
+  async getPostList(
+    @CurrentUser() userId: number, //
+    @Req() request: Request,
+    @Res() response: Response,
+  ) {
+    try {
+      const application = await this.findPostsByUserUseCase.execute({
+        userId: userId,
+      });
+
+      response.status(HttpStatus.OK).send({
+        statusCode: HttpStatus.OK,
+        timestamp: new Date().toISOString(),
+        path: request.url,
+        result: application.posts,
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Get('chat-list')
+  @UseGuards(JwtAuthGuard('access'))
+  @UseFilters(AllExceptionsFilter)
+  @ApiOperation({ summary: '작성한 Chat(댓글) 목록 조회' })
+  @ApiOkResponse({ type: UserControllerGetChatListResponse, description: '성공' })
+  @ApiBadRequestResponse({ type: ControllerResponseOnError, description: '요청 오류' })
+  @ApiInternalServerErrorResponse({ type: ControllerResponseOnError, description: '서버 오류' })
+  async getChatList(
+    @CurrentUser() userId: number, //
+    @Req() request: Request,
+    @Res() response: Response,
+  ) {
+    try {
+      const application = await this.findChatsByUserIdUseCase.execute({
+        userId: userId,
+      });
+
+      response.status(HttpStatus.OK).send({
+        statusCode: HttpStatus.OK,
+        timestamp: new Date().toISOString(),
+        path: request.url,
+        result: application.chats,
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Get('space-list')
+  @UseGuards(JwtAuthGuard('access'))
+  @UseFilters(AllExceptionsFilter)
+  @ApiOperation({ summary: '참여중인 Space 목록 조회' })
+  @ApiOkResponse({ type: UserControllerGetParticipatingSpaceListResponse, description: '성공' })
+  @ApiBadRequestResponse({ type: ControllerResponseOnError, description: '요청 오류' })
+  @ApiInternalServerErrorResponse({ type: ControllerResponseOnError, description: '서버 오류' })
+  async getParticipatingSpaceList(
+    @CurrentUser() userId: number, //
+    @Req() request: Request,
+    @Res() response: Response,
+  ) {
+    try {
+      const application = await this.findParticipatingSpaceListUseCase.execute({
+        id: userId,
+      });
+
+      response.status(HttpStatus.OK).send({
+        statusCode: HttpStatus.OK,
+        timestamp: new Date().toISOString(),
+        path: request.url,
+        result:
+          application.spaces.length === 0
+            ? []
+            : application.spaces
+                .filter((space) => space.isUse === true)
+                .map((space) => {
+                  return {
+                    spaceId: space.id,
+                    name: space.name,
+                    logoImageUrl: space.logoImageUrl,
+                  };
+                }),
       });
     } catch (error) {
       throw error;

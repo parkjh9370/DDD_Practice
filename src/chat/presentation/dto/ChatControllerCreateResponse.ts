@@ -4,7 +4,7 @@ import { ControllerResponse } from 'src/shared/core/presentation/ControllerRespo
 
 class ChatControllerCreateChatResponseBodyResult {
   @ApiProperty({
-    description: '생성된 classum_chat 관리번호',
+    description: '생성된 p_chat 관리번호',
     example: 1,
   })
   id: number;
@@ -21,7 +21,7 @@ export class ChatControllerCreateChatResponse extends ControllerResponse {
 
 class ChatControllerCreateChatReplyResponseBodyResult {
   @ApiProperty({
-    description: '생성된 classum_chat_reply 관리번호',
+    description: '생성된 p_chat_reply 관리번호',
     example: 1,
   })
   id: number;
